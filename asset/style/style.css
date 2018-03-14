@@ -1,0 +1,11 @@
+.trivia{
+    width:80%;
+    height:400px;
+    background: yellow;
+    margin: 10%;
+    text-align: center;
+}
+
+li{
+    list-style: none;
+}
