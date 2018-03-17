@@ -15,7 +15,11 @@ const questionCollection = [
     {"question":"What year was Min Yoongi from South Korea boy band &quot;BTS&quot; born in?","correct_answer":"1993","incorrect_answers":["1992","1995","1994"]},
     {"question":"Which ones of these Mario Kart games was made for the Gameboy Advance?","correct_answer":"Mario Kart: Super Circuit","incorrect_answers":["Mario Kart: Double Dash","Mario Kart 64","Super Mario Kart"]}
 ];
-const btnColor =['btn-primary', 'btn-warning', 'btn-danger', 'btn-info']
+const btnColor =['btn-primary', 'btn-warning', 'btn-danger', 'btn-info'];
+const gifs = {
+            'correct': ['correct.gif', 'futura-yes.gif', 'snl-accurate.gif', 'sabsotrue.gif', 'kpop-yes'],
+            'wrong' : ['giant-wrong.gif', 'house-wrong.gif', 'min-no.gif',]
+        }
 
 /**
  *   timer functions that will keep track of when the next round should start.
@@ -98,9 +102,7 @@ function enable (){
             timer = 15;
             nextRound();
         }else{
-            console.log('WRONG!');
             nextRound();
-
         }
     } );
 }
