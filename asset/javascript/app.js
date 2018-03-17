@@ -1,7 +1,6 @@
+"use strict";
 
- let timer = 30;
- 
-
+let timer = 30;
 let count = -1;
 const questionCollection = [
     {"question": "In the song &ldquo;The Ultimate Showdown of Ultimate Destiny,&rdquo; who is the only one to survive the battle?","correct_answer":"Mr. Rogers" ,"incorrect_answers":["Batman","Chuck Norris","Godzilla"]},
@@ -15,6 +14,12 @@ const questionCollection = [
     {"question":"Which ones of these Mario Kart games was made for the Gameboy Advance?","correct_answer":"Mario Kart: Super Circuit","incorrect_answers":["Mario Kart: Double Dash","Mario Kart 64","Super Mario Kart"]}
 ];
 
+/**
+ *   timer functions that will keep track of when the next round should start.
+ * 
+ * @method countDownTimer
+ * @param {*} time 
+ */
 const countDownTimer = function(time){
     timer = time;
      setInterval(function(){
@@ -36,14 +41,9 @@ const countDownTimer = function(time){
 function generateQuestionTemplate(question){
     questionOptions = question.incorrect_answers;
     questionOptions.push(question.correct_answer);
-    const questionTemplate = `
-    <div class="question">
-    ${question.question}
-    </div>
+    const questionTemplate = `<div class="question">${question.question}</div>
     <div class="answers">
-        <ul>
-           ${questionOptions.map(answer => `<li><button value="${answer}" class="btn">${answer}</button></li>`).join(' ')}
-        </ul>
+        <ul>${questionOptions.map(answer => `<li><button value="${answer}" class="btn">${answer}</button></li>`).join(' ')}</ul>
     </div>`;
     document.getElementsByClassName('question-area')[0].innerHTML =questionTemplate ;
     enable();
