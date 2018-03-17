@@ -56,12 +56,9 @@ function generateQuestionTemplate(question){
  * @param {*} question 
  */
 function randomizeAnswersOrder(question){
+    // Need to randomize the order of both the correct and incorect answers
     return question
 }
-
- if(timer === 0){
-     alert('Sorry Wrong answer')
- }
 
 /**
  *  Starts the next roud and questions 
@@ -75,7 +72,6 @@ function nextRound(){
     }else{
         alert('game Over');
     }
-  
 }
 
 /**
@@ -93,10 +89,11 @@ function enable (){
     } );
 }
 
-
+/**
+ * initilization function that will get everthing prepared for the app to run
+ */
 function init(){
     countDownTimer(3);
-
     enable();
 }
 
