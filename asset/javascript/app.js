@@ -1,17 +1,6 @@
 
  let timer = 30;
-const countDownTimer = function(time){
-   timer = time;
-    setInterval(function(){
-        timer--;
-       document.getElementsByClassName('timer2')[0].textContent = `${timer}`;
-       if(timer <= 0){
-           timer = 30;
-            test();
-       }
-    }, 1000);
-}
-
+ 
 
 let count = -1;
 const questionCollection = [
@@ -26,6 +15,24 @@ const questionCollection = [
     {"question":"Which ones of these Mario Kart games was made for the Gameboy Advance?","correct_answer":"Mario Kart: Super Circuit","incorrect_answers":["Mario Kart: Double Dash","Mario Kart 64","Super Mario Kart"]}
 ];
 
+const countDownTimer = function(time){
+    timer = time;
+     setInterval(function(){
+         timer--;
+        document.getElementsByClassName('timer2')[0].textContent = `${timer}`;
+        if(timer <= 0){
+            timer = 30;
+             test();
+        }
+     }, 1000);
+ }
+
+/**
+ * Generates the template string to be append to the question area
+ * 
+ * @method generateQuestionTemplate
+ * @param {*} question 
+ */
 function generateQuestionTemplate(question){
     questionOptions = question.incorrect_answers;
     questionOptions.push(question.correct_answer);
@@ -42,29 +49,41 @@ function generateQuestionTemplate(question){
     enable();
 }
 
+/**
+ *  Will change the order of the answers 
+ * 
+ * @method randomizeAnswersOrder
+ * @param {*} question 
+ */
 function randomizeAnswersOrder(question){
-    
-   
-
     return question
 }
 
  if(timer === 0){
      alert('Sorry Wrong answer')
  }
-function test(){
 
+/**
+ *  Starts the next roud and questions 
+ * 
+ * @method nextRound
+ */
+function nextRound(){
     if(count < questionCollection.length){
         count++;
         generateQuestionTemplate(questionCollection[count]);
-        
     }else{
         alert('game Over');
     }
   
 }
-function enable (){
 
+/**
+ *  Enable Listners for click events on the buttons
+ * 
+ * @method enable
+ */
+function enable (){
     $('.btn').on('click',  function(event){
         if($(event.target).val() ===  questionCollection[count].correct_answer){
             console.log('correct');
