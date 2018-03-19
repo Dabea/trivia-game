@@ -1,8 +1,9 @@
 "use strict";
 
-let timer = 30;
+let timer = 5;
 let count = -1;
 let correct = 0;
+const questionBoardElement = document.getElementsByClassName('question-area')[0];
 const questionCollection = [
     {"question": "In the song &ldquo;The Ultimate Showdown of Ultimate Destiny,&rdquo; who is the only one to survive the battle?","correct_answer":"Mr. Rogers" ,"incorrect_answers":["Batman","Chuck Norris","Godzilla"]},
     {"question":"Vatican City is a country.","correct_answer":"True","incorrect_answers":["False"]},
@@ -17,7 +18,7 @@ const questionCollection = [
 ];
 const btnColor =['btn-primary', 'btn-warning', 'btn-danger', 'btn-info'];
 const gifs = {
-            'correct': ['correct.gif', 'futura-yes.gif', 'snl-accurate.gif', 'sabsotrue.gif', 'kpop-yes'],
+            'correct': ['correct.gif', 'futura-yes.gif', 'snl-accurate.gif', 'sab-sotrue.gif', 'kpop-yes.gif'],
             'wrong' : ['giant-wrong.gif', 'house-wrong.gif', 'min-no.gif',]
         }
 
@@ -33,7 +34,7 @@ const countDownTimer = function(time){
          timer--;
         document.getElementsByClassName('timer2')[0].textContent = `${timer}`;
         if(timer <= 0){
-            timer = 5;
+            timer = 16;
             nextRound();
         }
      }, 1000);
@@ -46,31 +47,39 @@ const countDownTimer = function(time){
  * @param {*} question 
  */
 function generateQuestionTemplate(question){
-    let questionOptions = question.incorrect_answers;
+    // Slice will create new array not copy the referance
+    const questionOptions = question.incorrect_answers.slice();
     questionOptions.push(question.correct_answer);
-    questionOptions = shuffle(questionOptions);
+    const shuffledQuestions = shuffle(questionOptions);
     const questionTemplate = `<div class="question">${question.question}</div>
     <div class="answers">
-        <ul>${questionOptions.map((answer, index) => `<li><button value="${answer}" class="btn btn-space ${btnColor[index]}">${answer}</button></li>`).join(' ')}</ul>
+        <ul>${shuffledQuestions.map((answer, index) => `<li><button value="${answer}" class="btn btn-space ${btnColor[index]}">${answer}</button></li>`).join(' ')}</ul>
     </div>`;
-    document.getElementsByClassName('question-area')[0].innerHTML =questionTemplate ;
+    questionBoardElement.innerHTML =questionTemplate ;
     enable();
 }
 
 function generateScoreScreen(){
-    const scoreTemplate = `<div class="score-wrapper"><div class="score-screen">Game Complete You got ${correct} out of ${questionCollection.length}</div></div>`
-    document.getElementsByClassName('question-area')[0].innerHTML =scoreTemplate ;
+     const scoreTemplate = `<div class="score-wrapper"><div class="score-screen">Game Complete You got ${correct} out of ${questionCollection.length}</div></div>
+     <button class="btn start">  Play Again? </button>`
+     questionBoardElement.innerHTML = scoreTemplate ;
 }
 
-/**
- *  Will change the order of the answers 
- * 
- * @method randomizeAnswersOrder
- * @param {*} question 
- */
-function randomizeAnswersOrder(question){
-    // Need to randomize the order of both the correct and incorect answers
-    return question
+function generateResponse(status){
+    const question = questionCollection[count]
+    const randomNumber = Math.floor(Math.random() * gifs[status].length);
+    console.log('randomNumber: ' , randomNumber )
+    console.log('Chosen Gif' ,gifs[status][randomNumber])
+    const revealedAnswer =    `<div class="question">${question.question}</div>
+    <div>The Correct answer is ${question.correct_answer}</div>
+    <div class="img-height">
+    <img height="230"  src="asset/img/${gifs[status][randomNumber]}" />
+    </div>
+   
+    `;
+    timer = 1;
+    questionBoardElement.innerHTML = revealedAnswer ;
+
 }
 
 /**
@@ -82,6 +91,7 @@ function nextRound(){
     if(count < questionCollection.length){
         count++;
         generateQuestionTemplate(questionCollection[count]);
+        console.log(questionCollection[count]);
     }else{
         generateScoreScreen();
     }
@@ -94,18 +104,23 @@ function nextRound(){
  */
 function enable (){
     $('.btn').on('click',  function(event){
-        if(count  + 1  === questionCollection.length){
+        if((count +1)   === questionCollection.length){
+            timer = 30;
             generateScoreScreen();
+            return
         }
         if($(event.target).val() ===  questionCollection[count].correct_answer){
             console.log('correct');
             correct++;
-            timer = 15;
-            nextRound();
+            timer = 1;
+            generateResponse('correct');
         }else{
-            nextRound();
+            timer = 1;
+            generateResponse('wrong');
         }
     } );
+
+
 }
 
 /**
@@ -132,9 +147,14 @@ function shuffle(array) {
  * initilization function that will get everthing prepared for the app to run
  */
 function init(){
+    timer = 5;
+    count = -1;
+    correct = 0;
     countDownTimer(3);
     enable();
 }
+
+$(document).on('click', '.start', init)
 
 $( document ).ready(function(){
     init();

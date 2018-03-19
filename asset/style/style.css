@@ -1,6 +1,6 @@
 .trivia{
     width:80%;
-    height:400px;
+    height:450px;
     background: #58B98F;
     margin: 10%;
     text-align: center;
@@ -31,11 +31,18 @@ li{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-image: -webkit-gradient(linear,  left top,  left bottom, 
-        color-stop(0.00, red), 
-        color-stop(16%, orange),
-        color-stop(32%, yellow),
-        color-stop(48%, green),
-        color-stop(60%, blue),
-        color-stop(76%, indigo),
-        color-stop(1.00, violet));
+        color-stop(0.00, rgb(250, 53, 53)), 
+        color-stop(32%, rgb(250, 112, 61)),
+        color-stop(46%, rgb(226, 226, 85)),
+        color-stop(52%,  rgb(85, 245, 77) ),
+        color-stop(60%,  rgb(45, 45, 245) ),
+        color-stop(82%, rgb(171, 87, 231) ),
+        color-stop(1.00, rgb(253, 132, 149)));
 }
+
+.img-height {
+    max-height: 400px;
+}
+
+
+
