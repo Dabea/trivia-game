@@ -83,7 +83,7 @@ function generateResponse(status){
         <img height="230"  src="asset/img/${gifs[status][randomNumber]}" />
     </div>
     `;
-    timer = 1;
+    timer = 5;
     questionBoardElement.innerHTML = revealedAnswer ;
 
 }
@@ -118,10 +118,10 @@ function enable (){
         if($(event.target).val() ===  questionCollection[count].correct_answer){
             console.log('correct');
             correct++;
-            timer = 1;
+            timer = 5;
             generateResponse('correct');
         }else{
-            timer = 1;
+            timer = 5;
             generateResponse('wrong');
         }
     } );
