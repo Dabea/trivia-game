@@ -59,23 +59,29 @@ function generateQuestionTemplate(question){
     enable();
 }
 
+/**
+ * This creates the final score screen and the button for the players to restart
+ */
 function generateScoreScreen(){
      const scoreTemplate = `<div class="score-wrapper"><div class="score-screen">Game Complete You got ${correct} out of ${questionCollection.length}</div></div>
      <button class="btn start">  Play Again? </button>`
      questionBoardElement.innerHTML = scoreTemplate ;
 }
 
+/**
+ *  This generates the template and displays it after they guess an answer
+ * 
+ * @method generateResponse
+ * @param {*} status 
+ */
 function generateResponse(status){
     const question = questionCollection[count]
     const randomNumber = Math.floor(Math.random() * gifs[status].length);
-    console.log('randomNumber: ' , randomNumber )
-    console.log('Chosen Gif' ,gifs[status][randomNumber])
     const revealedAnswer =    `<div class="question">${question.question}</div>
     <div>The Correct answer is ${question.correct_answer}</div>
-    <div class="img-height">
-    <img height="230"  src="asset/img/${gifs[status][randomNumber]}" />
+        <div class="img-height">
+        <img height="230"  src="asset/img/${gifs[status][randomNumber]}" />
     </div>
-   
     `;
     timer = 1;
     questionBoardElement.innerHTML = revealedAnswer ;
@@ -127,6 +133,8 @@ function enable (){
  * Shuffles array and will return an  new array
  * @param {*} array 
  * @return array
+ * 
+ *   This is the Fisher- Yates Shuffle  https://bost.ocks.org/mike/shuffle/
  */
 function shuffle(array) {
     var m = array.length, t, i;
