@@ -2,9 +2,11 @@
 
 let timer = 30;
 let count = -1;
+let correct = 0;
 const questionCollection = [
     {"question": "In the song &ldquo;The Ultimate Showdown of Ultimate Destiny,&rdquo; who is the only one to survive the battle?","correct_answer":"Mr. Rogers" ,"incorrect_answers":["Batman","Chuck Norris","Godzilla"]},
-    {"question":"Vatican City is a country.","correct_answer":"True","incorrect_answers":["False"]},{"question":"Which of the following ancient Near Eastern peoples still exists as a modern ethnic group?","correct_answer":"Assyrians","incorrect_answers":["Babylonians","Hittites","Elamites"]},
+    {"question":"Vatican City is a country.","correct_answer":"True","incorrect_answers":["False"]},
+    {"question":"Which of the following ancient Near Eastern peoples still exists as a modern ethnic group?","correct_answer":"Assyrians","incorrect_answers":["Babylonians","Hittites","Elamites"]},
     {"question":"Who was the first female protagonist in a video game?","correct_answer":"Samus Aran","incorrect_answers":["Lara Croft","Alis Landale","Chell"]},
     {"question":"Which Overwatch character says the line &quot;Heroes never die!&quot;?","correct_answer":"Mercy","incorrect_answers":["Reaper","Sonic","Ana"]},
     {"question":"What is lost in Hawaiian and is also the name of a little girl in a 2002 film which features a alien named &quot;Stitch&quot;?","correct_answer":"Lilo","incorrect_answers":["Lolo","Lucy","Lulu"]},
@@ -13,6 +15,7 @@ const questionCollection = [
     {"question":"What year was Min Yoongi from South Korea boy band &quot;BTS&quot; born in?","correct_answer":"1993","incorrect_answers":["1992","1995","1994"]},
     {"question":"Which ones of these Mario Kart games was made for the Gameboy Advance?","correct_answer":"Mario Kart: Super Circuit","incorrect_answers":["Mario Kart: Double Dash","Mario Kart 64","Super Mario Kart"]}
 ];
+const btnColor =['btn-primary', 'btn-warning', 'btn-danger', 'btn-info']
 
 /**
  *   timer functions that will keep track of when the next round should start.
@@ -26,8 +29,8 @@ const countDownTimer = function(time){
          timer--;
         document.getElementsByClassName('timer2')[0].textContent = `${timer}`;
         if(timer <= 0){
-            timer = 30;
-             test();
+            timer = 5;
+            nextRound();
         }
      }, 1000);
  }
@@ -39,14 +42,19 @@ const countDownTimer = function(time){
  * @param {*} question 
  */
 function generateQuestionTemplate(question){
-    questionOptions = question.incorrect_answers;
+    let questionOptions = question.incorrect_answers;
     questionOptions.push(question.correct_answer);
     const questionTemplate = `<div class="question">${question.question}</div>
     <div class="answers">
-        <ul>${questionOptions.map(answer => `<li><button value="${answer}" class="btn">${answer}</button></li>`).join(' ')}</ul>
+        <ul>${questionOptions.map((answer, index) => `<li><button value="${answer}" class="btn btn-space ${btnColor[index]}">${answer}</button></li>`).join(' ')}</ul>
     </div>`;
     document.getElementsByClassName('question-area')[0].innerHTML =questionTemplate ;
     enable();
+}
+
+function generateScoreScreen(){
+    const scoreTemplate = `<div class="score-wrapper"><div class="score-screen">Game Complete You got ${correct} out of ${questionCollection.length}</div></div>`
+    document.getElementsByClassName('question-area')[0].innerHTML =scoreTemplate ;
 }
 
 /**
@@ -70,7 +78,7 @@ function nextRound(){
         count++;
         generateQuestionTemplate(questionCollection[count]);
     }else{
-        alert('game Over');
+        generateScoreScreen();
     }
 }
 
@@ -81,10 +89,18 @@ function nextRound(){
  */
 function enable (){
     $('.btn').on('click',  function(event){
+        if(count  + 1  === questionCollection.length){
+            generateScoreScreen();
+        }
         if($(event.target).val() ===  questionCollection[count].correct_answer){
             console.log('correct');
+            correct++;
+            timer = 15;
+            nextRound();
         }else{
             console.log('WRONG!');
+            nextRound();
+
         }
     } );
 }
