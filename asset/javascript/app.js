@@ -48,6 +48,7 @@ const countDownTimer = function(time){
 function generateQuestionTemplate(question){
     let questionOptions = question.incorrect_answers;
     questionOptions.push(question.correct_answer);
+    questionOptions = shuffle(questionOptions);
     const questionTemplate = `<div class="question">${question.question}</div>
     <div class="answers">
         <ul>${questionOptions.map((answer, index) => `<li><button value="${answer}" class="btn btn-space ${btnColor[index]}">${answer}</button></li>`).join(' ')}</ul>
@@ -106,6 +107,26 @@ function enable (){
         }
     } );
 }
+
+/**
+ * Shuffles array and will return an  new array
+ * @param {*} array 
+ * @return array
+ */
+function shuffle(array) {
+    var m = array.length, t, i;
+    // While there remain elements to shuffle…
+    while (m) {
+      // Pick a remaining element…
+      i = Math.floor(Math.random() * m--);
+      // And swap it with the current element.
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+  
+    return array;
+  }
 
 /**
  * initilization function that will get everthing prepared for the app to run
